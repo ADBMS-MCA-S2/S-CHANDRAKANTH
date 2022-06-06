@@ -1,0 +1,10 @@
+from pymongo import MongoClient
+
+client = pymongo.MongoClient("mongodb+srv://Chandrakanth:<8943119093>@cluster0.7879sfm.mongodb.net/?retryWrites=true&w=majority")
+db = client.test
+mydatabase=client.gettingStarted
+people=mydatabase.people
+personD={
+    "name":{"first":"Alan","Last":"turing"}
+    }
+people.insert_one(personD)
