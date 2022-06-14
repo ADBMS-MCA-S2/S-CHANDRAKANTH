@@ -121,8 +121,7 @@ db.movies.find().pretty()
   > db.movies.find({$text:{$search:"bilbo"}},{"title":1,_id:0})
  "title" : "the hobbit:the battle of the five armies" }
 
-9.db.movies.find({$and:[{sysnopsis:{$regex:'bilbo'}},{synopsis:{$not:{$regex:'gandalf'}}}]}
-10.db.movies.find({$or:[{synopsis:{$regex:'dwarves'}},{synopsis:{$regex:'hobbit'}}]}
+
 12.> db.movies.deleteOne({title:"pee wee hermans big adventure"})
 { "acknowledged" : true, "deletedCount" : 1 }
 >
