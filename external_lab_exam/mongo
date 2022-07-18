@@ -1,0 +1,14 @@
+ db.student.find({name:{$regex:"^A"}},{_id:0,id:1,name:1,department:1})
+{ "id" : 2, "name" : "Anuradha", "department" : "civil" }
+{ "id" : 1, "name" : "Anjali", "department" : "mca" }
+
+
+> db.student.find({department:"mca"},{_id:0,name:1,phone:1}).sort({external:-1}).limit(2)
+{ "name" : "vivek", "phone" : 8582639777 }
+{ "name" : "Anjali", "phone" : 8582639562 }
+
+
+> db.student.find({vaccination_status:"bothvaccinated"},{_id:0,name:1,phone:1})
+{ "name" : "vivek", "phone" : 8582639777 }
+{ "name" : "Anuradha", "phone" : 9992639562 }
+{ "name" : "Anjali", "phone" : 8582639562 }
