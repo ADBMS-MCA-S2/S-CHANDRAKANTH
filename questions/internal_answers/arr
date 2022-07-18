@@ -1,0 +1,78 @@
+covid.sql
+create database covid;
+use covid;
+create table person(pid int primary key,pname varchar(20),dob date,vaccine varchar(20),
+novaccine varchar(20));
+insert into person values(1,"arjun","2000-10-10","covisheild",2);
+insert into person values(2,"ammu","2000-09-09","covisheild",1);
+insert into person values(3,"akhila","2001-10-10","covaxin",2);
+insert into person values(4,"arun","1999-10-10",null,0);
+select * from person;
+CREATE TABLE covstatus(pid INT NOT NULL,pname VARCHAR(20) NOT NULL,vaccine VARCHAR(20),vstatus VARCHAR(20) NOT NULL);
+
+call vaccstatus(1,"arjun","covisheild",2);
+call vaccstatus(2,"ammu","covisheild",1);
+call vaccstatus(3,"akhila","covaxin",2);
+call vaccstatus(2,"arun",null,0);
+select * from covstatus;
+
+select pid,pname,travel(novaccine) from person;
+....................................................
+stored procedure
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `vaccstatus`(pid int ,pname varchar(20),vaccine varchar(20),novaccine varchar(20))
+BEGIN
+if (novaccine=2)
+then
+insert into covstatus value(pid,pname,vaccine,"fully vaccinated");
+end if;
+if (novaccine=1)
+then
+insert into covstatus value(pid,pname,vaccine,"partially vaccinated");
+end if;
+if (novaccine=0)
+then
+insert into covstatus value(pid,pname,vaccine,"not vaccinated");
+end if;
+END
+...............................................................
+function.sql
+
+CREATE DEFINER=`root`@`localhost` FUNCTION `travel`(novaccine INT) RETURNS varchar(20) CHARSET utf8mb4
+BEGIN
+if (novaccine=2)
+then
+return ('eligible for going abroad');
+else
+return ('not eligible for going abroad');
+end if;
+END
+..........................
+trigger
+
+create database employees;
+use employees;
+create table employee(emp_id int,emp_name varchar(20),dept varchar(20));
+insert into employee values(101,"arjun","mca");
+insert into employee values(102,"ammu","mca");
+insert into employee values(103,"Raimi","btech");
+select * from employee;
+create table dept_mca(id int,dept_name varchar(20),dept_emp varchar(20));
+create table dept_cs(id int,dept_name varchar(20),dept_emp varchar(20));
+select * from employee;
+insert into employee values(105,"Anu","mca");
+select * from dept_mca;
+insert into employee values(106,"R0se","CS");
+select * from dept_cs;
+.....................
+
+CREATE DEFINER=`root`@`localhost` TRIGGER `employees`.`employee_BEFORE_INSERT` BEFORE INSERT ON `employee` FOR EACH ROW
+BEGIN
+if new.dept='mca'then
+INSERT INTO dept_mca set id=new.emp_id,dept_name=new.emp_name,dept_emp="Asst.proff fill";
+end if;
+if new.dept='cs' then
+ INSERT INTO dept_cs set id=new.emp_id,dept_name=new.emp_name,dept_emp="Asst.proff fill";
+ end if;
+END
+....................
