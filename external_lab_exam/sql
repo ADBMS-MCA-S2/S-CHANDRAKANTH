@@ -1,0 +1,48 @@
+create database details;
+use details;
+create table student(rollno int primary key,name varchar(20),address varchar(20),totalmarks varchar(20));
+create table admission(rollno int primary key,cid int,sem int);
+create table course(cid int,coursename varchar(20),fees int);
+
+insert into student values(101,'arjun','abc p.o',100);
+insert into student values(102,'binoy','def p.o',110);
+insert into student values(103,'sanal','ghi p.o',120);
+insert into student values(104,'arun','jkl p.o',130);
+insert into student values(105,'sona','abc p.o',150);
+
+select * from student;
+
+insert into admission values(101,1,2);
+insert into admission values(102,2,2);
+insert into admission values(103,3,3);
+insert into admission values(104,4,4);
+insert into admission values(105,5,1);
+
+select * from admission;
+
+insert into course values(1,'mca',10000);
+insert into course values(2,'mca',10036);
+insert into course values(3,'mba',15200);
+insert into course values(1,'bba',10450);
+insert into course values(1,'bcom',18500);
+insert into course values(4,'bba',10550);
+insert into course values(5,'bba',13450);
+
+select * from course;
+
+
+
+
+select course.coursename,count(rollno) as no_of_students from course,admission where course.cid=admission.cid group by(coursename);
+
+
+create view college as select
+student.rollno,course.cid,course.coursename from
+student,admission,course where
+course.cid=admission.cid and
+student.rollno=admission.rollno and
+course.coursename="mca";
+select * from college;
+
+
+select distinct rollno,sum(fees) from admission join course where admission.cid=course.cid and rollno=105;
